@@ -9,15 +9,21 @@ app = Flask(
 
 @app.get('/')
 def index():
-  return render_template('index.html')
+  return render_template('index.html', title='Home')
+
+@app.get('/about')
+def about():
+  return render_template('about.html', title='About',  location=request.args.get('location'))
 
 @app.get('/hello')
 def hello():
-  return render_template('hello.html', name=request.args.get('name'))
+  return render_template('hello.html', name=request.args.get('name'), title='Hello')
+
+#  eg http://localhost:8080/hello?name=Renee
 
 @app.errorhandler(404)
 def handle_404(e):
-    return '<h1>404</h1><p>File not found!</p><img src="https://httpcats.com/404.jpg" alt="cat in box" width=400>', 404
+    return render_template('status_404.html', title="Page not found"), 404
 
 
 if __name__ == '__main__':
